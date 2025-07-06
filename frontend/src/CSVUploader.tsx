@@ -116,10 +116,9 @@ const CSVUploader = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-  period: "2025-07-01/2025-07-14", // You can make this dynamic later
-  employees,
+  period: "2025-07-01/2025-07-14", 
   shifts,
-  current_assignments: [] // Optional for now
+  current_assignments: [] 
 }),
     });
 
@@ -127,7 +126,6 @@ const CSVUploader = () => {
 
     const data = await res.json();
 
-// Transform backend {shift_id, employee_id} → {shiftId, employeeId}
 const formattedAssignments = data.assignments.map((a: any) => ({
   shiftId: a.shift_id,
   employeeId: a.employee_id

@@ -1,46 +1,100 @@
-# Getting Started with Create React App
+# Shift Scheduler
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Shift Scheduler is a full-stack application designed to assist in staff shift planning and optimization. It provides a modern frontend interface for uploading and reviewing employee and shift data, and a backend that supports both greedy and ILP (Integer Linear Programming) optimization strategies to assign employees to shifts based on skill, availability, and working hour constraints.
 
-## Available Scripts
+## Project Structure
 
-In the project directory, you can run:
+shift-scheduler/
+├── backend/ # FastAPI backend and optimization logic
+├── frontend/ # React + TypeScript frontend
+├── Dockerfile # Backend Dockerfile
+├── docker-compose.yml # Compose setup for frontend and backend
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Technologies Used
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Frontend**: React, TypeScript, PapaParse
+- **Backend**: FastAPI, Python, PuLP
+- **DevOps**: Docker, Docker Compose
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `npm run build`
+Ensure the following are installed on your system:
+- Docker
+- Docker Compose
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Running the Application
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To build and start both frontend and backend services, run the following command from the project root:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+docker compose up --build
 
-### `npm run eject`
+The application will be accessible at:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Frontend: http://localhost:3000
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Backend: http://localhost:8000
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Features
+Upload employees and shifts via CSV files
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Run a greedy scheduling algorithm or ILP optimization
 
-## Learn More
+Ensure constraints such as skills, availability, and working hours are met
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Export final shift assignments to a downloadable CSV file
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Prevents scheduling conflicts such as overlapping shifts
+
+Backend exposes a POST API endpoint at /api/schedule/optimize
+
+ILP Optimization Details
+The ILP model is implemented in backend/optimizer.py and includes the following:
+
+Objective: Minimize total number of assigned shifts (can be extended to minimize overtime)
+
+Constraints:
+
+Each shift is assigned to exactly one employee
+
+No overlapping shifts for a given employee
+
+Employees do not exceed their maximum allowed hours
+
+Employees only receive shifts for which they have the required skill
+
+Folder Overview
+frontend/: Contains the React client app, including a CSV uploader, local greedy scheduler, and interface to the backend
+
+backend/: FastAPI-based service that handles optimization and routes
+
+Dockerfile: Builds the backend service
+
+frontend/Dockerfile: Builds the React frontend
+
+docker-compose.yml: Orchestrates both services
+
+Suggested Improvements
+Implement authentication and user roles
+
+Store uploaded shift/employee data in a database
+
+Add calendar or Gantt chart visualization for shift assignments
+
+Deploy frontend and backend using a CI/CD pipeline
+
+Author
+Mohamed Yasser
+Internship Project — Progressio
+July 2025
+
+License
+This project is licensed under the MIT License.
+
+
+---
+
+Let me know if you want this as a downloadable `.md` file or need help with versioning, commit messages, or final GitHub setup.
